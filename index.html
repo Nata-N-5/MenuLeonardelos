@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu Leonardelos</title>
+  <link rel="icon" href="leo.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: sans-serif;
+    }
+
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #555;
+      z-index: 9999;
+    }
+
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="loader">Cargando menú Leonardelos...</div>
+  <iframe id="pdf-frame" src="leos2025.pdf"></iframe>
+
+  <script>
+    const iframe = document.getElementById('pdf-frame');
+    const loader = document.getElementById('loader');
+
+    // Mostrar loader por al menos 1 segundo, incluso si el iframe carga rápido
+    let minimumLoadTime = false;
+    setTimeout(() => {
+      minimumLoadTime = true;
+    }, 1000); // 1 segundo mínimo
+
+    iframe.onload = () => {
+      const checkReady = () => {
+        if (minimumLoadTime) {
+          loader.style.display = 'none';
+          iframe.style.display = 'block';
+        } else {
+          setTimeout(checkReady, 100); // esperar hasta que se cumpla el tiempo mínimo
+        }
+      };
+      checkReady();
+    };
+  </script>
+</body>
+</html>
